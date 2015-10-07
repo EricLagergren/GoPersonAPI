@@ -1,5 +1,6 @@
 package person
 
+// Model is a ...
 type Model struct {
 	ID           int64  `json:"id"`
 	FirstName    string `json:"firstname"`

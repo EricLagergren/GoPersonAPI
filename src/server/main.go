@@ -8,6 +8,8 @@ import (
 )
 
 func main() {
-	router := NewRouter()
-	log.Fatal(http.ListenAndServe(fmt.Sprintf("%s:%s", os.Getenv("WEBSERVERHOST"), os.Getenv("WEBSERVERPORT")), router))
+	addr := fmt.Sprintf("%s:%s",
+		os.Getenv("WEBSERVERHOST"), os.Getenv("WEBSERVERPORT"))
+
+	log.Fatal(http.ListenAndServe(addr), NewRouter())
 }

@@ -3,15 +3,14 @@ package person
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"os"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 // Database variable useable from anywhere within our application
-var (
-	db *sql.DB
-)
+var db *sql.DB
 
 // Runs when the Go file is initialized
 func init() {
@@ -23,19 +22,18 @@ func init() {
 		os.Getenv("MYSQLPORT"),
 		os.Getenv("MYSQLDB"),
 	)
-	// Attempt to establish a new SQL driver connection (does not actually connect to the SQL server)
-	database, err := sql.Open("mysql", d)
-	// Something went wrong when trying to establish a driver connection to SQL
+
+	var err error
+	db, err = sql.Open("mysql", d)
 	if err != nil {
 		panic(err)
 	}
+
 	// Ping does not open a connection, will only validate DSN data
-	err = database.Ping()
 	// Something went wrong with our DSN data sent to the MySQL server
-	if err != nil {
+	if err := database.Ping(); err != nil {
 		panic(err)
 	}
-	db = database
-	// We successfully can communicate with the MySQL database server
+
 	log.Print("Database connected successfully!")
 }
